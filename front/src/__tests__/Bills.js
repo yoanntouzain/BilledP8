@@ -15,9 +15,9 @@
  import Bills from "../containers/Bills.js";
  
  
- describe("Given I am connected as an employee", () => {
-   describe("When I am on Bills Page", () => {
-     test("Then bill icon in vertical layout should be highlighted", async () => {
+describe("Given I am connected as an employee", () => {
+  describe("When I am on Bills Page", () => {
+    test("Then bill icon in vertical layout should be highlighted", async () => {
  
        Object.defineProperty(window, 'localStorage', { value: localStorageMock })
        window.localStorage.setItem('user', JSON.stringify({
@@ -56,9 +56,9 @@
        expect(dates).toEqual(datesSorted)
      })
    })
- })
+})
  
- describe('Given I am connected as Employe and I am on Bill page and I clicked on a bill', () => {
+describe('Given I am connected as Employe and I am on Bill page and I clicked on a bill', () => {
    describe('When I click on the icon eye', () => {
      test('Then, modal sould open',async () => {
          Object.defineProperty(window, 'localStorage', { value: localStorageMock })
@@ -90,6 +90,6 @@
        expect(modale).toBeTruthy()
      })
    })
- })
+})
  
  
