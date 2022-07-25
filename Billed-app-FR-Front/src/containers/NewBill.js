@@ -13,32 +13,40 @@ export default class NewBill {
     this.fileUrl = null
     this.fileName = null
     this.billId = null
+    this.acceptedTypes = [
+      "image/jpeg",
+      "image/png"
+    ]
     new Logout({ document, localStorage, onNavigate })
   }
   handleChangeFile = e => {
     e.preventDefault()
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
-    const filePath = e.target.value.split(/\\/g)
-    const fileName = filePath[filePath.length-1]
-    const formData = new FormData()
-    const email = JSON.parse(localStorage.getItem("user")).email
-    formData.append('file', file)
-    formData.append('email', email)
+    if (this.acceptedTypes.includes(file.type)) {
+      const filePath = file.name.split(/\\/g)
+      const fileName = filePath[filePath.length-1]
+      const formData = new FormData()
+      const email = JSON.parse(localStorage.getItem("user")).email
+      formData.append('file', file)
+      formData.append('email', email)
 
-    this.store
-      .bills()
-      .create({
-        data: formData,
-        headers: {
-          noContentType: true
-        }
-      })
-      .then(({fileUrl, key}) => {
-        console.log(fileUrl)
-        this.billId = key
-        this.fileUrl = fileUrl
-        this.fileName = fileName
-      }).catch(error => console.error(error))
+      this.store
+        .bills()
+        .create({
+          data: formData,
+          headers: {
+            noContentType: true
+          }
+        })
+        .then(({fileUrl, key}) => {
+          this.billId = key
+          this.fileUrl = fileUrl
+          this.fileName = fileName
+        }).catch(error => console.error(error))
+    }else{
+      alert("Le type de fichier est incorrect. .png,.jpg,.jpeg uniquement")
+      this.document.querySelector(`input[data-testid="file"]`).value = ""
+    }
   }
   handleSubmit = e => {
     e.preventDefault()
